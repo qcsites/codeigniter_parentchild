@@ -19,6 +19,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+            $this->load->helper('url');
 		$this->load->view('welcome_message');
 	}
         
@@ -40,18 +41,15 @@ class Welcome extends CI_Controller {
         $obj_parentchild->order_by_phrase = " ORDER BY LAST_NAME";
         
         $root_item_id = intval($this->uri->segment(3));
-        // just being used to default to value
+        // just setting a default value
         if ($root_item_id < 100 ) {
             $root_item_id = 100;
         }
-        $all_childs = $obj_parentchild->getAllChilds($root_item_id);
+        $all_childs = $obj_parentchild->getAllChilds(xss_clean($root_item_id));
         $html = "<p><b>All employees for employee id: ".$root_item_id."</b></p>";
         $html = $html . "<pre>";
-        // print_r($all_childs);
 	foreach($all_childs as $chld) {
 		$html = $html .  $chld[$obj_parentchild->item_list_field_name]. ', ' . $chld['FIRST_NAME']. ' - ' . $chld['EMAIL']." ".anchor('welcome/test_employees/'.$chld['EMPLOYEE_ID'], "View from this level", 'title="Click to view this manager\'s employees."')." ".anchor('welcome/test_path/'.$chld['EMPLOYEE_ID'], "View full path for this employee", 'title="Click to view this employee full manager path."')."<br />";
-                // print_r($chld);
-                // echo '<br/>';
 	}
         $html = $html . "</pre>";
         $data['pc'] = $html;
@@ -81,14 +79,11 @@ class Welcome extends CI_Controller {
         if ($root_item_id < 1 ) {
             $root_item_id = 1;
         }
-        $all_childs = $obj_parentchild->getAllChilds($root_item_id);
+        $all_childs = $obj_parentchild->getAllChilds(xss_clean($root_item_id));
         $html = "<p><b>All children for element: ".$root_item_id."</b></p>";
         $html = $html . "<pre>";
-        // print_r($all_childs);
 	foreach($all_childs as $chld) {
 		$html = $html .  anchor('welcome/test_pc/'.$chld['ID'], $chld[$obj_parentchild->item_list_field_name], 'title="Click to view this element\'s children."')."<br />";
-                // print_r($chld);
-                // echo '<br/>';
 	}
         $html = $html . "</pre>";
         $data['pc'] = $html;
@@ -116,8 +111,7 @@ class Welcome extends CI_Controller {
         
         $item_id = $this->uri->segment(3);
         $html = "<p><b>The full path for element: ".$item_id."</b></p>";
-	$item_path_array=$obj_parentchild->getItemPath($item_id, true); 
-        // print_r($item_path_array);
+	$item_path_array=$obj_parentchild->getItemPath(xss_clean($item_id), true); 
         $html = $html . "<pre>";
 	foreach ($item_path_array as $val) { $html = $html . $val['LAST_NAME']."->"; }
         
