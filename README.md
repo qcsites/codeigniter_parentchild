@@ -18,3 +18,7 @@ There is test database sql file included. Setup a adatabase and configure CodeIg
 
 Copy the welcome controller and the views to your CodeIgniter installation.
 
+Make sure you load the security helper for the test.
+
+A demo of the test if located here http://www.qcexample.com/ci_parentchild/
+
