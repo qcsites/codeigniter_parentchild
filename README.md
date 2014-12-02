@@ -25,7 +25,7 @@ tables.
 
 Copy the welcome controller and the views to your CodeIgniter installation.
 
-A demo of the test if located here http://www.qcexample.com/ci_parentchild/
+A demo of the test is located here http://www.qcexample.com/ci_parentchild/
 
 The demo code isn't the most beautiful thing you'll ever see but
 it will show you how to use the library for some basics.
